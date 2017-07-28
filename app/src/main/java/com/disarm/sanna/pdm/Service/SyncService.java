@@ -39,7 +39,7 @@ public class SyncService extends Service {
     private static String databaseName = "fileDB.txt";
     static String line;
     public WebServer webServer;
-    public Discoverer discoverer;
+    public static Discoverer discoverer;
     public FileManager fileManager;
     public FileTransporter fileTransporter;
     public Controller controller;

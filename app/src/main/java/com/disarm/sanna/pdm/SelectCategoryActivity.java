@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.disarm.sanna.pdm.DisarmConnect.DCService;
 import com.disarm.sanna.pdm.DisarmConnect.DataMuleService;
+import com.disarm.sanna.pdm.Opp.StartService;
 import com.disarm.sanna.pdm.Service.SyncService;
 import com.disarm.sanna.pdm.Util.PrefUtils;
 import com.disarm.sanna.pdm.location.LocationState;
@@ -51,10 +52,12 @@ import static com.disarm.sanna.pdm.ActivityList.GPS_LOC;
 public class SelectCategoryActivity extends AppCompatActivity{
     private boolean syncServiceBound = false;
     private boolean myServiceBound = false;
+    private boolean startServiceBound = false;
     private boolean dataMuleServiceBound = false;
     private boolean gpsService = false;
     Button btnSurakshit;
     SyncService syncService;
+    StartService startService;
     public DCService myService;
     //public DataMuleService dataMuleService;
     LocationManager lm;
@@ -107,17 +110,15 @@ public class SelectCategoryActivity extends AppCompatActivity{
 
             @Override
             public void onToggleSwitchChangeListener(int position, boolean isChecked) {
-                if (position == 1) {
-                    final Intent myServiceIntent = new Intent(getBaseContext(), DCService.class);
-                    bindService(myServiceIntent, myServiceConnection, Context.BIND_AUTO_CREATE);
-                    startService(myServiceIntent);
-                } else {
-                    final Intent myServiceIntent = new Intent(getBaseContext(), DCService.class);
-                    if (myServiceBound) {
-                        unbindService(myServiceConnection);
-                        myServiceBound = false;
-                        stopService(myServiceIntent);
-                    }
+                if(position==1) {
+                    final Intent startServiceIntent = new Intent(getBaseContext(), StartService.class);
+                    bindService(startServiceIntent, startServiceConnection, Context.BIND_AUTO_CREATE);
+                    startService(startServiceIntent);
+                }
+                else{
+                    final Intent startServiceIntent = new Intent(getBaseContext(), StartService.class);
+                    bindService(startServiceIntent , startServiceConnection , Context.BIND_AUTO_CREATE);
+                    startService(startServiceIntent);
                 }
             }
         });
@@ -348,6 +349,19 @@ public class SelectCategoryActivity extends AppCompatActivity{
             enableGPS();
         }
     }
+    private  ServiceConnection startServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            StartService.StartServiceBinder binder = (StartService.StartServiceBinder) service;
+            startService = binder.getService();
+            startServiceBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            startServiceBound = false;
+        }
+    };
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -100,6 +100,8 @@
             android:exported="true"
             />
         <service android:name=".DisarmConnect.DCService" />
+        <service android:name=".Opp.StartService"/>
         <service android:name=".DisarmConnect.DataMuleService" />
+
     </application>
 </manifest>

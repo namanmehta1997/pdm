@@ -6,12 +6,12 @@ package com.disarm.sanna.pdm.Opp;
 
 public class Parameter {
     public static int maximum_AP_on = 600; //10 minutes
-    public static int minimum_wait_AP = 10; //10 seconds
-    public static int ap_increase_time= 10000;
-    public static int current_ap_time = 60000;
+    public static int minimum_wait_AP = 10; //10 seconds //changed from 10 to 0
+    public static int ap_increase_time= 0; //changed from 10000
+    public static int current_ap_time = 30000; //changed from 60000
     public static int maximum_ap_increase_time = 120000;
     public static int current_wifi_time = 10000;
-    public static int increase_wifi_time = 10000;
+    public static int increase_wifi_time = 0; //change from 10000
     public static int maximum_wifi_time = 120000;
     public static int alpha=2; //STA switch parameter
     public static double beta=1/2; //AP switch parameter

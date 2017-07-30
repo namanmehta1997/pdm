@@ -118,7 +118,7 @@ public class SelectCategoryActivity extends AppCompatActivity{
                 else{
                     final Intent startServiceIntent = new Intent(getBaseContext(), StartService.class);
                     bindService(startServiceIntent , startServiceConnection , Context.BIND_AUTO_CREATE);
-                    startService(startServiceIntent);
+                    stopService(startServiceIntent);
                 }
             }
         });
@@ -300,12 +300,12 @@ public class SelectCategoryActivity extends AppCompatActivity{
         syncServiceBound = false;
         stopService(syncServiceIntent);
 
-        final Intent myServiceIntent = new Intent(getBaseContext(), DCService.class);
-        if (myServiceBound) {
-            unbindService(myServiceConnection);
+        final Intent startServiceIntent = new Intent(getBaseContext(), StartService.class);
+        if (startServiceBound) {
+            unbindService(startServiceConnection);
         }
-        myServiceBound = false;
-        stopService(myServiceIntent);
+        startServiceBound = false;
+        stopService(startServiceIntent);
 
         if (gpsService) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
